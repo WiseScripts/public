@@ -25,13 +25,13 @@ EOF
 
 apt update && apt upgrade && apt dist-upgrade && apt full-upgrade && apt autoremove && apt autoclean || true
 
-echo "================================= install sofware =============================================="
+echo "================================= install software =============================================="
 
-apt install --assume-yes --no-install-recommends wget curl net-tools tree mlocate
+apt install --assume-yes --no-install-recommends wget curl net-tools tree mlocate tmux lsb-release
 
-echo "================================= create alias and profile ====================================="
+echo "================================= create aliases and profile ==================================="
 
-cat << "EOF" > ~/.bash_alias
+cat << "EOF" > ~/.bash_aliases
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   export LS_OPTIONS='--color=auto'
