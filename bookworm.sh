@@ -27,7 +27,7 @@ apt update && apt upgrade && apt dist-upgrade && apt full-upgrade && apt autorem
 
 echo "================================= install software =============================================="
 
-apt install --assume-yes --no-install-recommends wget curl net-tools tree mlocate tmux lsb-release
+apt install --assume-yes --no-install-recommends wget curl net-tools tree mlocate lsb-release
 
 echo "================================= create aliases and profile ==================================="
 
@@ -148,6 +148,8 @@ set-window-option -g aggressive-resize on
 EOF
 
 source ~/.bash_aliases
+
+apt install tmux
 source ~/.bash_profile
 
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf && \
