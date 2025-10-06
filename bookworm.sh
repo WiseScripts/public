@@ -23,7 +23,7 @@ deb-src https://ftp.debian.org/debian/ bookworm-updates contrib main non-free no
 deb-src https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
 EOF
 
-apt update && apt upgrade && apt dist-upgrade && apt full-upgrade && apt autoremove && apt autoclean
+apt update && apt upgrade && apt dist-upgrade && apt full-upgrade && apt autoremove && apt autoclean || true
 
 echo "================================= install sofware =============================================="
 
