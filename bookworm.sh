@@ -71,7 +71,7 @@ if [ "$BASH" ]; then
 fi
 EOF
 
-cat << "EOF" > ~/.bash_rc
+cat << "EOF" > ~/.bashrc
 
 # If not running interactively, don't do anything!
 case $- in
@@ -149,7 +149,7 @@ EOF
 
 source ~/.bash_aliases
 
-apt install tmux
+apt install --assume-yes --no-install-recommends tmux
 source ~/.bash_profile
 
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf && \
