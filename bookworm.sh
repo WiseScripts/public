@@ -1,11 +1,14 @@
 #!/bin/bash
 
+echo "================================= create /etc/resolv.conf ======================================"
 cat << "EOF" > /etc/resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 nameserver 2001:4860:4860::8888
 nameserver 2001:4860:4860::8844
 EOF
+
+echo "================================= execute apt update ==========================================="
 
 tee /etc/apt/sources.list << EOF
 deb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
@@ -22,7 +25,11 @@ EOF
 
 apt update && apt upgrade && apt dist-upgrade && apt full-upgrade && apt autoremove && apt autoclean
 
+echo "================================= install sofware =============================================="
+
 apt install --assume-yes --no-install-recommends wget curl net-tools tree mlocate
+
+echo "================================= create alias and profile ====================================="
 
 cat << "EOF" > ~/.bash_alias
 if [ -x /usr/bin/dircolors ]; then
