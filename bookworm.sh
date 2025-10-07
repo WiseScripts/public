@@ -155,6 +155,8 @@ EOF
 
 apt update && apt install --assume-yes --no-install-recommends wget curl tmux net-tools tree mlocate lsb-release
 
-echo "================================= source .bash_profile ========================================="
+# echo "================================= source .bash_profile ========================================="
+# source ~/.bash_profile
 
-source ~/.bash_profile
+echo "================================= Disconet and Reconnect========================================"
+
