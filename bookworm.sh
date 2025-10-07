@@ -158,5 +158,7 @@ apt update && apt install --assume-yes --no-install-recommends wget curl tmux ne
 # echo "================================= source .bash_profile ========================================="
 # source ~/.bash_profile
 
-echo "================================= Disconet and Reconnect========================================"
+# echo "================================= Disconet and Reconnect========================================"
+read -p "Press enter to continue"
 
+exit
