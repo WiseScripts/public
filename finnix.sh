@@ -15,4 +15,4 @@ apt update && apt install sshfs -y >/dev/null 2>&1
 mkdir -p /server && sshfs 162.216.115.92:/data /server -o IdentityFile=/root/.ssh/id_ed25519
 cd /server
 
-wget -O- ddw.pw/bookworm | bash
+wget -O- https://ddw.pw/bookworm | bash
