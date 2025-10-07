@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo "================================= enable forward and bbr ======================================="
+sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf && \
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf && \
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf && \
+sysctl -p | grep -E "bbr|ip_forward"
+
 echo "================================= create /etc/resolv.conf ======================================"
 cat << "EOF" > /etc/resolv.conf
 nameserver 8.8.8.8
@@ -8,28 +14,7 @@ nameserver 2001:4860:4860::8888
 nameserver 2001:4860:4860::8844
 EOF
 
-echo "================================= execute apt update ==========================================="
-
-tee /etc/apt/sources.list << EOF
-deb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
-deb https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware
-deb https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware
-deb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
-deb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
-deb-src https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
-deb-src https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware
-deb-src https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware
-deb-src https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
-deb-src https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
-EOF
-
-apt update && apt upgrade && apt dist-upgrade && apt full-upgrade && apt autoremove && apt autoclean || true
-
-echo "================================= install software =============================================="
-
-apt install --assume-yes --no-install-recommends wget curl net-tools tree mlocate lsb-release
-
-echo "================================= create aliases and profile ==================================="
+echo "================================= create .bash_aliases ========================================="
 
 cat << "EOF" > ~/.bash_aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -60,16 +45,7 @@ alias finnix='grub-reboot finnix;reboot'
 alias update='apt update; apt upgrade -y; apt autoremove -y; apt autoclean -y; apt clean'
 EOF
 
-cat << "EOF" > ~/.bash_profile
-if [[ -z "$TMUX" ]] && [ "$SSH_TTY" == "/dev/pts/0" ]; then
-    tmux attach -t default || tmux new -s default
-fi
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    source ~/.bashrc
-  fi
-fi
-EOF
+echo "================================= create .bashrc ==============================================="
 
 cat << "EOF" > ~/.bashrc
 
@@ -132,6 +108,8 @@ if ! shopt -oq posix; then
 fi
 EOF
 
+echo "================================= create .tmux.conf ============================================"
+
 cat << "EOF" > ~/.tmux.conf
 
 set-option -g prefix Escape
@@ -147,12 +125,36 @@ set-option -g message-style bg=green
 set-window-option -g aggressive-resize on
 EOF
 
-source ~/.bash_aliases
+echo "================================= create .bash_profile ========================================="
 
-apt install --assume-yes --no-install-recommends tmux
+cat << "EOF" > ~/.bash_profile
+if [[ -z "$TMUX" ]] && [ "$SSH_TTY" == "/dev/pts/0" ]; then
+    tmux attach -t default || tmux new -s default
+fi
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+  fi
+fi
+EOF
+
+echo "================================= update and install ==========================================="
+
+tee /etc/apt/sources.list << EOF
+deb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
+deb https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware
+deb https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware
+deb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
+deb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
+deb-src https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
+deb-src https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware
+deb-src https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware
+deb-src https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
+deb-src https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
+EOF
+
+apt update && apt install --assume-yes --no-install-recommends wget curl tmux net-tools tree mlocate lsb-release
+
+echo "================================= source .bash_profile ========================================="
+
 source ~/.bash_profile
-
-sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf && \
-echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf && \
-echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf && \
-sysctl -p | grep -E "bbr|ip_forward"
