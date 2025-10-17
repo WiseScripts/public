@@ -153,7 +153,7 @@ deb-src https://ftp.debian.org/debian/ trixie-updates contrib main non-free non-
 deb-src https://security.debian.org/debian-security/ trixie-security contrib main non-free non-free-firmware
 EOF
 
-apt update && apt install --assume-yes --no-install-recommends wget curl tmux net-tools tree mlocate lsb-release
+apt update && apt install --assume-yes --no-install-recommends wget curl tmux net-tools tree plocate lsb-release
 
 # echo "================================= source .bash_profile ========================================="
 # source ~/.bash_profile
