@@ -37,7 +37,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 alias acp='acp -gR'
-alias amv='amv -g'
+alias amv='amv -ig'
 
 alias cls='clear'
 alias nano='nano -lK'
