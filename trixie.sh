@@ -36,6 +36,9 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+alias acp='acp -gR'
+alias amv='amv -g'
+
 alias cls='clear'
 alias nano='nano -lK'
 alias ns='netstat -plunt'
@@ -135,6 +138,8 @@ if [ "$BASH" ]; then
   if [ -f ~/.bashrc ]; then
     source ~/.bashrc
   fi
+  /usr/bin/keychain ~/.ssh/id_ed25519
+  . ~/.keychain/${HOSTNAME}-sh 
 fi
 EOF
 
