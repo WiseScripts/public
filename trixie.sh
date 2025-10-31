@@ -145,20 +145,41 @@ EOF
 
 echo "================================= update and install ==========================================="
 
-tee /etc/apt/sources.list << EOF
-deb https://ftp.debian.org/debian/ trixie contrib main non-free non-free-firmware
-deb https://ftp.debian.org/debian/ trixie-backports contrib main non-free non-free-firmware
-deb https://ftp.debian.org/debian/ trixie-proposed-updates contrib main non-free non-free-firmware
-deb https://ftp.debian.org/debian/ trixie-updates contrib main non-free non-free-firmware
-deb https://security.debian.org/debian-security/ trixie-security contrib main non-free non-free-firmware
-deb-src https://ftp.debian.org/debian/ trixie contrib main non-free non-free-firmware
-deb-src https://ftp.debian.org/debian/ trixie-backports contrib main non-free non-free-firmware
-deb-src https://ftp.debian.org/debian/ trixie-proposed-updates contrib main non-free non-free-firmware
-deb-src https://ftp.debian.org/debian/ trixie-updates contrib main non-free non-free-firmware
-deb-src https://security.debian.org/debian-security/ trixie-security contrib main non-free non-free-firmware
+cat << EOF > /etc/apt/sources.list.d/debian.sources
+Types: deb deb-src
+URIs: https://ftp.debian.org/debian/
+Suites: trixie
+Components: contrib main non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb deb-src
+URIs: https://ftp.debian.org/debian/
+Suites: trixie-proposed-updates
+Components: contrib main non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb deb-src
+URIs: https://ftp.debian.org/debian/
+Suites: trixie-updates
+Components: contrib main non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb deb-src
+URIs: https://security.debian.org/debian-security/
+Suites: trixie-security
+Components: contrib main non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 EOF
 
-apt update && apt install --assume-yes --no-install-recommends wget curl tmux net-tools tree plocate lsb-release
+cat << EOF > /etc/apt/sources.list.d/debian-backports.sources
+Types: deb deb-src
+URIs: https://ftp.debian.org/debian/
+Suites: trixie-backports
+Components: contrib main non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg 
+EOF
+
+apt update && apt install --assume-yes --no-install-recommends wget curl tmux net-tools tree plocate lsb-release keychain
 
 # echo "================================= source .bash_profile ========================================="
 # source ~/.bash_profile
