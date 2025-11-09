@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "================================= enable forward and bbr ======================================="
-sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf && \
-echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf && \
-echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf && \
-sysctl -p | grep -E "bbr|ip_forward"
+echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/custom.conf && \
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.d/custom.conf && \
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.d/custom.conf && \
+sysctl -p /etc/sysctl.d/custom.conf | grep -E "bbr|ip_forward"
 
 echo "================================= create /etc/resolv.conf ======================================"
 cat << "EOF" > /etc/resolv.conf
