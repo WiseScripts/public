@@ -181,6 +181,11 @@ Components: contrib main non-free non-free-firmware
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg 
 EOF
 
+wget -O /usr/local/bin/rmate https://raw.githubusercontent.com/aurora/rmate/master/rmate && \
+wget -P /usr/local/bin https://github.com/shangdawei/linux-bin-amd64/raw/main/acp && \
+wget -P /usr/local/bin https://github.com/shangdawei/linux-bin-amd64/raw/main/amv && \
+chmod +x /usr/local/bin/rmate /usr/local/bin/acp /usr/local/bin/amv
+
 apt update && apt install --assume-yes --no-install-recommends wget curl tmux net-tools tree plocate lsb-release keychain
 
 # echo "================================= source .bash_profile ========================================="
