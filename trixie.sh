@@ -145,6 +145,8 @@ EOF
 
 echo "================================= update and install ==========================================="
 
+[ -f /etc/apt/sources.list ] && mv /etc/apt/sources.list /etc/apt/sources.list.disabled
+
 cat << EOF > /etc/apt/sources.list.d/debian.sources
 Types: deb deb-src
 URIs: https://ftp.debian.org/debian/
