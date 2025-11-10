@@ -158,6 +158,11 @@ deb-src https://ftp.debian.org/debian/ bookworm-updates contrib main non-free no
 deb-src https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
 EOF
 
+wget -O /usr/local/bin/rmate https://raw.githubusercontent.com/aurora/rmate/master/rmate && \
+wget -P /usr/local/bin https://github.com/shangdawei/linux-bin-amd64/raw/main/acp && \
+wget -P /usr/local/bin https://github.com/shangdawei/linux-bin-amd64/raw/main/amv && \
+chmod +x /usr/local/bin/rmate /usr/local/bin/acp /usr/local/bin/amv
+
 apt update && apt install --assume-yes --no-install-recommends wget curl tmux keychain net-tools tree mlocate lsb-release
 
 # echo "================================= source .bash_profile ========================================="
